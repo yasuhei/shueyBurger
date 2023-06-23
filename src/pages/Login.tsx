@@ -1,5 +1,6 @@
 import { useState } from "react";
 import logo from "../images/logo.jpeg";
+import axios from "axios";
 import {
   Box,
   Button,
@@ -11,7 +12,11 @@ import {
   TextField,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { api } from "../Api";
 
+interface IToken {
+  data: { access_token: string };
+}
 export function Login() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -28,9 +33,22 @@ export function Login() {
     setEmail("");
     setName("");
   };
-  const handleSubmit = () => {
-    name;
-    email;
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const usuario = {
+      name,
+      email,
+    };
+    api
+      .post("http://localhost:8000/public/registrar", usuario)
+      .then((response: IToken) => {
+        localStorage.setItem("token", response.data.access_token);
+        setEmail("");
+        setName("");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (
@@ -116,7 +134,7 @@ export function Login() {
                     </div>
                   </Box>
                 </div>
-                <div className=" flex justify-around items-center w-full pb-4">
+                <div className=" flex justify-around items-center w-full pb-5">
                   <Button
                     variant="outlined"
                     color="error"
