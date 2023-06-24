@@ -1,13 +1,9 @@
+import { RouterProvider } from "react-router";
 import "./App.css";
+import { router } from "./routes";
 
 function App() {
-  return (
-    <div className="flex justify-center ">
-      <h1 className="font-bold text-2xl text-blue-900">
-        React and Tailwind with Vitejs!
-      </h1>
-    </div>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;

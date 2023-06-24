@@ -1,6 +1,5 @@
 import { useState } from "react";
 import logo from "../images/logo.jpeg";
-import axios from "axios";
 import {
   Box,
   Button,
@@ -13,10 +12,8 @@ import {
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { api } from "../Api";
+import { IToken } from "../Types/token";
 
-interface IToken {
-  data: { access_token: string };
-}
 export function Login() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -42,7 +39,6 @@ export function Login() {
     api
       .post("http://localhost:8000/public/registrar", usuario)
       .then((response: IToken) => {
-        localStorage.setItem("token", response.data.access_token);
         setEmail("");
         setName("");
       })
