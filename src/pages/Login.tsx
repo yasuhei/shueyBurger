@@ -11,11 +11,22 @@ import {
   TextField,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { api } from "../Api";
+import { useNavigate } from "react-router-dom";
+
+import { IToken } from "../Types/token";
+import { Loader } from "../Components/Loader";
+import ModalAlert from "../Components/ModalAlert";
 
 export function Login() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const [alert, setAlert] = useState("");
+  const [loader, setLoader] = useState(false);
+  const navigate = useNavigate();
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleMouseDownPassword = (
@@ -24,17 +35,53 @@ export function Login() {
     event.preventDefault();
   };
 
-  const handleCancel = () => {
-    setEmail("");
-    setName("");
-  };
-  const handleSubmit = () => {
-    name;
-    email;
+  // const handleCancel = () => {
+  //   setEmail("");
+  //   setName("");
+  // };
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setLoader(true);
+    const usuario = {
+      name,
+      email,
+    };
+    api
+      .post("http://localhost:8000/public/login", usuario)
+      .then((response: IToken) => {
+        localStorage.setItem("token", response.data.access_token);
+
+        setEmail("");
+        setName("");
+        setTimeout(() => {
+          setLoader(false);
+
+          navigate("/home");
+        }, 2000);
+      })
+
+      .catch((error) => {
+        setMessage(error.response.data.message);
+        setAlert(error.response.data.alert);
+
+        setModalOpen(true);
+        setTimeout(() => {
+          setLoader(false);
+          setModalOpen(false);
+        }, 3000);
+
+        console.error(error);
+      });
   };
 
   return (
     <>
+      <ModalAlert
+        openModal={modalOpen}
+        close={() => setModalOpen(false)}
+        message={message}
+        alert={alert}
+      />
       <section className="">
         <div className="flex justify-center items-center ">
           <div className="w-screen h-screen bg-[url('./images/background.jpg')] bg-no-repeat bg-center bg-cover"></div>
@@ -116,16 +163,14 @@ export function Login() {
                     </div>
                   </Box>
                 </div>
-                <div className=" flex justify-around items-center w-full pb-4">
+                <div className=" flex justify-around items-center w-full pb-5">
                   <Button
                     variant="outlined"
-                    color="error"
-                    onClick={handleCancel}
+                    type="submit"
+                    className="w-[38ch]"
+                    disabled={(email && name) === ""}
                   >
-                    Cancelar
-                  </Button>
-                  <Button variant="outlined" type="submit">
-                    Entrar
+                    {loader ? <Loader /> : "Entrar"}
                   </Button>
                 </div>
               </form>
