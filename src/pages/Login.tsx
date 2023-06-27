@@ -35,10 +35,6 @@ export function Login() {
     event.preventDefault();
   };
 
-  // const handleCancel = () => {
-  //   setEmail("");
-  //   setName("");
-  // };
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoader(true);
@@ -56,7 +52,7 @@ export function Login() {
         setTimeout(() => {
           setLoader(false);
 
-          navigate("/home");
+          navigate("/");
         }, 2000);
       })
 
