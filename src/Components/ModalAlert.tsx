@@ -20,9 +20,16 @@ const Transition = React.forwardRef(function Transition(
 export interface ModalProps {
   openModal: boolean;
   close: () => void;
+  message: string;
+  alert: string;
 }
 
-export default function ModalConfirm({ openModal, close }: ModalProps) {
+export default function ModalAlert({
+  openModal,
+  close,
+  message,
+  alert,
+}: ModalProps) {
   const [open, setOpen] = React.useState(false);
 
   React.useEffect(() => {
@@ -49,15 +56,13 @@ export default function ModalConfirm({ openModal, close }: ModalProps) {
             onClose={handleClose}
             aria-describedby="alert-dialog-slide-description"
           >
-            <DialogTitle>
-              {"Boaaa!!! Cadastro realizado com sucesso!!?"}
-            </DialogTitle>
+            <DialogTitle>{alert}</DialogTitle>
             <DialogContent>
               <DialogContentText
                 id="alert-dialog-slide-description"
                 className="text-center"
               >
-                Venha ver oque preparamos para você!!!
+                {message}
               </DialogContentText>
             </DialogContent>
             <DialogActions>
