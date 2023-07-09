@@ -1,9 +1,16 @@
 import { RouterProvider } from "react-router";
-import "./App.css";
 import { router } from "./routes";
+import { Header } from "./Components/Header";
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <div className=" mx-auto max-w-screen-xl">
+        <Header />
+        <RouterProvider router={router} />;
+      </div>
+    </>
+  );
 }
 
 export default App;

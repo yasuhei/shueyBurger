@@ -18,8 +18,11 @@ import axios from "axios";
 import { ICep } from "../Types/cep";
 import ModalConfirm from "../Components/ModalConfirm";
 import { useNavigate } from "react-router-dom";
+import * as Yup from "yup";
 
 export function Cadastro() {
+  const navigate = useNavigate();
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [complemento, setComplemento] = useState("");
@@ -31,15 +34,10 @@ export function Cadastro() {
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const formatCep = (value: any) => {
-    // Remove todos os caracteres não numéricos
     const numericValue = value.replace(/\D/g, "");
-
-    // Formata o valor do CEP
     const formattedCep = numericValue.replace(/(\d{5})(\d{3})/, "$1-$2");
-
     return formattedCep;
   };
-  const navigate = useNavigate();
 
   const handleChange = (event: any) => {
     const formattedValue = formatCep(event.target.value);
@@ -102,6 +100,7 @@ export function Cadastro() {
         console.error(error);
       });
   };
+
   return (
     <>
       <ModalConfirm openModal={modalOpen} close={() => setModalOpen(false)} />
@@ -199,7 +198,7 @@ export function Cadastro() {
                         />
                       </FormControl>
                       <TextField
-                        label="Cep"
+                        label="cep"
                         id="outlined-size-small"
                         defaultValue="Cep"
                         size="small"
@@ -232,7 +231,7 @@ export function Cadastro() {
                       />
                     </div>
                   </Box>
-                  <div className=" flex justify-around items-center w-full py-5">
+                  <div className=" flex justify-around items-center w-11/12 gap-2 py-5">
                     <Button
                       variant="outlined"
                       color="error"
@@ -240,7 +239,11 @@ export function Cadastro() {
                     >
                       Cancelar
                     </Button>
-                    <Button variant="outlined" type="submit">
+                    <Button
+                      variant="outlined"
+                      type="submit"
+                      disabled={(name && complemento) === ""}
+                    >
                       Cadastrar
                     </Button>
                   </div>
