@@ -16,7 +16,7 @@ export function Description({
   const priceNumber = price;
 
   return (
-    <div className=" shadow-sm hover:shadow-xl border border-gray-200 rounded-md h-48 gap-4 m-2">
+    <div className=" shadow-sm hover:shadow-xl border border-gray-200 rounded-md h-48 gap-4 m-2 cursor-grabbing">
       <div className="flex justify-center items-center ">
         <div className="flex justify-center items-start flex-col pl-4 w-full ">
           <h3 className="text-gray-600 text-2xl font-semibold pt-3">

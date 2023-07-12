@@ -40,12 +40,12 @@ export function Cardapio() {
         </div>
       </div>
 
-      <h1 className="text-center text-2xl text-gray-600 w-full uppercase font-semibold py-5">
+      <h1 className="text-center text-2xl text-gray-600 w-full uppercase font-semibold py-5 ">
         As bebidas mais refrescantes das galáxias
       </h1>
 
-      <div className="flex justify-center items-center h-auto py-4">
-        <div className="grid grid-cols-2 items-center justify-center w-full ">
+      <div className="flex justify-center items-center h-auto py-4 ">
+        <div className="grid grid-cols-2 items-center justify-center w-full   ">
           {food[0]?.bebidas.map((item, index) => (
             <Description
               key={item.id}
