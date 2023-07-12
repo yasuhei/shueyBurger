@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import logo from "../images/logo.jpeg";
+import logo from "../assets/images/logo.jpeg";
 import {
   Box,
   Button,
@@ -80,7 +80,7 @@ export function Cadastro() {
       name,
     };
     api
-      .post("http://localhost:8000/public/registrar", usuario)
+      .post("http://localhost:3000/public/registrar", usuario)
       .then((response: IToken) => {
         localStorage.setItem("token", response.data.access_token);
         setEmail("");
