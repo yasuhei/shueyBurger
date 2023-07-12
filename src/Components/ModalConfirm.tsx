@@ -61,7 +61,9 @@ export default function ModalConfirm({ openModal, close }: ModalProps) {
               </DialogContentText>
             </DialogContent>
             <DialogActions>
-              <Button onClick={handleClose}>Fechar</Button>
+              <Button onClick={handleClose} color="warning">
+                Fechar
+              </Button>
             </DialogActions>
           </Dialog>
         </div>

@@ -1,10 +1,11 @@
 import axios from "axios";
 
 export const api = axios.create({
-  baseURL: "",
+  baseURL: "http://localhost:3000/",
   headers: {
     Accept: "application/json",
-    Content: "application/json",
+    "Content-Type": "application/json",
+    Authorization: `Baerer ${localStorage.getItem("token")}`,
   },
 });
 

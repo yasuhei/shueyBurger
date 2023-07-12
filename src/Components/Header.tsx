@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import logo from "../images/sh.png";
 import {
   Navbar,
   MobileNav,
@@ -7,9 +6,11 @@ import {
   Button,
   IconButton,
 } from "@material-tailwind/react";
+import ModalLogin from "./ModalLogin";
 
 export function Header() {
   const [openNav, setOpenNav] = useState(false);
+  const [openLogin, setOpenLogin] = useState(false);
 
   useEffect(() => {
     window.addEventListener(
@@ -17,6 +18,10 @@ export function Header() {
       () => window.innerWidth >= 960 && setOpenNav(false),
     );
   }, []);
+
+  const handleLogin = () => {
+    setOpenLogin(true);
+  };
 
   const navList = (
     <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6 ">
@@ -26,7 +31,10 @@ export function Header() {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <a href="#" className="flex items-center text-gray-600 font-semibold">
+        <a
+          href="cardapio"
+          className="flex items-center text-gray-600 font-semibold"
+        >
           Cardápio
         </a>
       </Typography>
@@ -47,29 +55,32 @@ export function Header() {
         className="p-1 font-normal"
       >
         <a href="#" className="flex items-center text-gray-600 font-semibold">
-          Sobre nós
+          Onde estamos
         </a>
       </Typography>
     </ul>
   );
 
   return (
-    <Navbar className="mx-auto max-w-screen-xl py-2 px-4 lg:px-8 lg:py-4 border-none shadow-none shadow-sm">
+    <Navbar className="mx-auto max-w-screen-xl py-2 px-4 lg:px-8 lg:py-4 border-none shadow-none shadow-sm bg-transparent">
+      <ModalLogin openModal={openLogin} close={() => setOpenLogin(false)} />;
       <div className="container mx-auto flex items-center justify-between pt-3">
         {/* <img src={logo} alt="" className="w-10 h-10" /> */}
-        <span className="text-red-600 font-semibold">Shuey BBQ</span>
+        <a href="/" className="text-red-600 font-semibold">
+          Shuey BBQ
+        </a>
         <div className="hidden lg:block">{navList}</div>
         <div className="flex justify-center items-center gap-4">
           <a className="cursor-pointer text-red-600 font-semibold">
             Criar conta
           </a>
 
-          <a
-            href="cadastro"
+          <button
             className="p-2 text-white text-center font-semibold bg-red-600 w-24  rounded-md cursor-pointer hover:bg-red-400"
+            onClick={handleLogin}
           >
             Entrar
-          </a>
+          </button>
         </div>
 
         <IconButton
