@@ -23,6 +23,7 @@ import { Loader } from "./Loader";
 import { IToken } from "../Types/token";
 import { api } from "../Api";
 import ModalAlert from "./ModalAlert";
+import { ModalProps } from "./ModalConfirm";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -32,11 +33,6 @@ const Transition = React.forwardRef(function Transition(
 ) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
-
-export interface ModalProps {
-  openModal: boolean;
-  close: () => void;
-}
 
 export default function ModalLogin({ openModal, close }: ModalProps) {
   const [open, setOpen] = React.useState(false);
@@ -82,6 +78,7 @@ export default function ModalLogin({ openModal, close }: ModalProps) {
         setName("");
         setTimeout(() => {
           setLoader(false);
+          window.location.reload();
 
           //   navigate("/");
         }, 2000);
@@ -194,7 +191,7 @@ export default function ModalLogin({ openModal, close }: ModalProps) {
                   <div className=" flex justify-around items-center w-full pb-5">
                     <button
                       type="submit"
-                      className="w-[34ch] p-2 text-white text-center font-semibold bg-red-600 w-24  rounded-md cursor-pointer hover:bg-red-400"
+                      className="w-[34ch] p-2 text-white text-center font-semibold bg-red-600   rounded-md cursor-pointer hover:bg-red-400 disabled:bg-red-300 disabled:cursor-not-allowed"
                       disabled={(email && name) === ""}
                     >
                       {loader ? <Loader /> : "Entrar"}

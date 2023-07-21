@@ -1,8 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { CarouselFood } from "../Components/Carousel";
 import { Delivery } from "../Components/Delivery";
-import { Footer } from "../Components/Footer";
-import { api } from "../Api";
+import { ExplorerCity } from "../Components/ExplorerCity";
 
 export const UserContext = createContext<string>("");
 export function Home() {
@@ -22,6 +21,7 @@ export function Home() {
         </div>
 
         <Delivery />
+        <ExplorerCity />
       </main>
     </>
   );

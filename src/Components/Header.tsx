@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useLayoutEffect } from "react";
 import {
   Navbar,
   MobileNav,
@@ -7,10 +7,15 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 import ModalLogin from "./ModalLogin";
+import { ModalCadastro } from "./ModalCadastro";
+import { ShoppingCart, LogOut } from "lucide-react";
 
 export function Header() {
   const [openNav, setOpenNav] = useState(false);
   const [openLogin, setOpenLogin] = useState(false);
+  const [openCadastro, setOpenCadastro] = useState(false);
+
+  const [isLogged, setIsLogged] = useState(localStorage.getItem("token"));
 
   useEffect(() => {
     window.addEventListener(
@@ -19,12 +24,22 @@ export function Header() {
     );
   }, []);
 
+  const handleCadastro = () => {
+    setOpenCadastro(true);
+  };
+
   const handleLogin = () => {
     setOpenLogin(true);
   };
 
+  const handleGoOut = () => {
+    window.location.reload();
+
+    localStorage.clear();
+  };
+
   const navList = (
-    <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6 ">
+    <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6  ">
       <Typography
         as="li"
         variant="small"
@@ -62,25 +77,47 @@ export function Header() {
   );
 
   return (
-    <Navbar className="mx-auto max-w-screen-xl py-2 px-4 lg:px-8 lg:py-4 border-none shadow-none shadow-sm bg-transparent">
+    <Navbar className="mx-auto max-w-screen-xl py-2 px-4 lg:px-8 lg:py-4 border-none  shadow-sm bg-transparent">
       <ModalLogin openModal={openLogin} close={() => setOpenLogin(false)} />;
+      <ModalCadastro
+        openModal={openCadastro}
+        close={() => setOpenCadastro(false)}
+      />
       <div className="container mx-auto flex items-center justify-between pt-3">
         {/* <img src={logo} alt="" className="w-10 h-10" /> */}
         <a href="/" className="text-red-600 font-semibold">
-          Shuey BBQ
+          Shuey Burguer
         </a>
         <div className="hidden lg:block">{navList}</div>
         <div className="flex justify-center items-center gap-4">
-          <a className="cursor-pointer text-red-600 font-semibold">
-            Criar conta
-          </a>
+          {isLogged ? (
+            <>
+              <ShoppingCart
+                className="text-red-600 cursor-pointer mr-2"
+                onClick={handleGoOut}
+              />
+              <LogOut
+                className="text-red-600 cursor-pointer"
+                onClick={handleGoOut}
+              />
+            </>
+          ) : (
+            <>
+              <button
+                className="cursor-pointer text-red-600 font-semibold"
+                onClick={handleCadastro}
+              >
+                Criar conta
+              </button>
 
-          <button
-            className="p-2 text-white text-center font-semibold bg-red-600 w-24  rounded-md cursor-pointer hover:bg-red-400"
-            onClick={handleLogin}
-          >
-            Entrar
-          </button>
+              <button
+                className="p-2 text-white text-center font-semibold bg-red-600 w-24  rounded-md cursor-pointer hover:bg-red-400"
+                onClick={handleLogin}
+              >
+                Entrar
+              </button>
+            </>
+          )}
         </div>
 
         <IconButton
