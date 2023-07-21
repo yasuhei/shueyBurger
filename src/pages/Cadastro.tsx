@@ -18,7 +18,6 @@ import axios from "axios";
 import { ICep } from "../Types/cep";
 import ModalConfirm from "../Components/ModalConfirm";
 import { useNavigate } from "react-router-dom";
-import * as Yup from "yup";
 
 export function Cadastro() {
   const navigate = useNavigate();

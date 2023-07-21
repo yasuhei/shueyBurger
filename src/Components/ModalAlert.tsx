@@ -21,7 +21,7 @@ export interface ModalProps {
   openModal: boolean;
   close: () => void;
   message: string;
-  alert: string;
+  alert?: string;
 }
 
 export default function ModalAlert({

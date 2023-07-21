@@ -1,4 +1,4 @@
-import { RouterProvider } from "react-router";
+import { Outlet, RouterProvider } from "react-router";
 import { router } from "./routes";
 import { Header } from "./Components/Header";
 import { Footer } from "./Components/Footer";
@@ -8,6 +8,7 @@ function App() {
     <>
       <div className=" mx-auto max-w-screen-xl ">
         <Header />
+        <Outlet />
         <RouterProvider router={router} />
         <Footer />
       </div>

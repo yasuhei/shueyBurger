@@ -3,9 +3,18 @@ import { api } from "../Api";
 import { IFood } from "../interfaces/Ifood";
 import { imagens, refris } from "../utils/Images";
 import { Description } from "../Components/Description";
+import ModalQuantity from "../Components/ModalQuantity";
 
 export function Cardapio() {
   const [food, setFood] = useState<IFood[]>([]);
+  const [open, setOpen] = useState(false);
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState(0);
+  const [condimentacao, setCondimentacao] = useState("");
+  const [img, setImg] = useState("");
+
+  const imagensComidas = imagens;
+  const imagensBebidas = refris;
 
   useEffect(() => {
     api
@@ -14,8 +23,30 @@ export function Cardapio() {
       .catch((err) => console.log(err));
   }, []);
 
+  const handleRowClick = (
+    description: string,
+    price: number,
+    condimentacao: string,
+    index: number,
+    img: string,
+  ) => {
+    setDescription(description);
+    setPrice(price);
+    setCondimentacao(condimentacao);
+    setImg(img);
+    setOpen(true);
+  };
+
   return (
     <>
+      <ModalQuantity
+        close={() => setOpen(false)}
+        openModal={open}
+        condimentacao={condimentacao}
+        description={description}
+        img={img}
+        price={price}
+      />
       <h1 className="text-center text-2xl text-gray-600 w-full uppercase font-semibold py-5">
         Os lanches tops das galáxias
       </h1>
@@ -23,19 +54,15 @@ export function Cardapio() {
       <div className="flex justify-center items-center h-auto py-4">
         <div className="grid grid-cols-2 items-center justify-center w-full ">
           {food[0]?.foods.map((item, index) => (
-            // <div
-            //   className=" shadow-sm hover:shadow-xl border border-gray-200 rounded-md h-48 gap-4 m-2"
-
-            // >
             <Description
               key={item.id}
               description={item.description}
               price={item.price}
               condimentacao={item.condimentacao}
-              img={imagens}
+              img={imagensComidas}
               index={index}
+              onClickRow={handleRowClick}
             />
-            // </div>
           ))}
         </div>
       </div>
@@ -48,11 +75,13 @@ export function Cardapio() {
         <div className="grid grid-cols-2 items-center justify-center w-full   ">
           {food[0]?.bebidas.map((item, index) => (
             <Description
+              condimentacao=""
               key={item.id}
               description={item.description}
               price={item.price}
-              img={refris}
+              img={imagensBebidas}
               index={index}
+              onClickRow={handleRowClick}
             />
           ))}
         </div>
