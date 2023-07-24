@@ -8,6 +8,7 @@ import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
 import { Minus, Plus, X } from "lucide-react";
 import { forwardRef, useEffect, useState } from "react";
+import { CartItem, useCart } from "./CartContext";
 
 const Transition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -24,7 +25,6 @@ export interface ModalProps {
   description: string;
   price: number;
   condimentacao: string;
-  //   index: number;
   img: string;
 }
 
@@ -34,12 +34,12 @@ export default function ModalQuantity({
   description,
   price,
   condimentacao,
-  //   index,
   img,
 }: ModalProps) {
   const [open, setOpen] = useState(false);
   const [cont, setCont] = useState(1);
-  // const priceNumber = price;
+  const { addToCart } = useCart();
+  const [isLogged, setIsLogged] = useState(localStorage.getItem("token"));
 
   useEffect(() => {
     setOpen(openModal);
@@ -59,6 +59,19 @@ export default function ModalQuantity({
   };
 
   const total = price * cont;
+
+  const handleAddToCart = () => {
+    const item: CartItem = {
+      description,
+      condimentacao,
+      total,
+      price,
+      cont,
+    };
+
+    addToCart(item);
+    handleClose();
+  };
 
   return (
     <>
@@ -118,7 +131,13 @@ export default function ModalQuantity({
                 </div>
                 <button
                   className="flex justify-center items-center gap-6 bg-red-600 p-3 text-white rounded-md text-sm disabled:bg-red-400 cursor-pointer disabled:cursor-not-allowed hover:bg-red-500"
-                  // disabled
+                  onClick={handleAddToCart}
+                  disabled={!isLogged}
+                  title={
+                    isLogged?.length
+                      ? "Você deve fazer o login para comprar"
+                      : ""
+                  }
                 >
                   <p className="font-semibold">Adicionar</p>
                   <p className="font-bold w-20">

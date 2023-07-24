@@ -1,4 +1,4 @@
-import { useState, useEffect, useLayoutEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   Navbar,
   MobileNav,
@@ -9,14 +9,18 @@ import {
 import ModalLogin from "./ModalLogin";
 import { ModalCadastro } from "./ModalCadastro";
 import { ShoppingCart, LogOut } from "lucide-react";
+import ModalCart from "./Cart";
+import { Badge } from "@mui/material";
+import { useCart } from "./CartContext";
 
 export function Header() {
   const [openNav, setOpenNav] = useState(false);
+  const [isLogged, setIsLogged] = useState(localStorage.getItem("token"));
   const [openLogin, setOpenLogin] = useState(false);
+  const [openCartModal, setOpenCartModal] = useState(false);
   const [openCadastro, setOpenCadastro] = useState(false);
 
-  const [isLogged, setIsLogged] = useState(localStorage.getItem("token"));
-
+  const { cartItems } = useCart();
   useEffect(() => {
     window.addEventListener(
       "resize",
@@ -36,6 +40,9 @@ export function Header() {
     window.location.reload();
 
     localStorage.clear();
+  };
+  const handleOpenCart = () => {
+    setOpenCartModal(true);
   };
 
   const navList = (
@@ -79,6 +86,10 @@ export function Header() {
   return (
     <Navbar className="mx-auto max-w-screen-xl py-2 px-4 lg:px-8 lg:py-4 border-none  shadow-sm bg-transparent">
       <ModalLogin openModal={openLogin} close={() => setOpenLogin(false)} />;
+      <ModalCart
+        close={() => setOpenCartModal(false)}
+        openModal={openCartModal}
+      />
       <ModalCadastro
         openModal={openCadastro}
         close={() => setOpenCadastro(false)}
@@ -92,10 +103,14 @@ export function Header() {
         <div className="flex justify-center items-center gap-4">
           {isLogged ? (
             <>
-              <ShoppingCart
-                className="text-red-600 cursor-pointer mr-2"
-                onClick={handleGoOut}
-              />
+              <button onClick={handleOpenCart}>
+                <Badge
+                  badgeContent={cartItems.length}
+                  className="text-red-600 rounded-full  "
+                >
+                  <ShoppingCart className=" cursor-pointer mr-2" />
+                </Badge>
+              </button>
               <LogOut
                 className="text-red-600 cursor-pointer"
                 onClick={handleGoOut}
