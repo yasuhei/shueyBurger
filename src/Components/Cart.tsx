@@ -94,7 +94,7 @@ export default function ModalCart({ openModal, close }: ModalProps) {
 
                 {cartItems.map((item, index) => (
                   <>
-                    <div className="flex justify-between items-center w-full">
+                    <div key={index}  className="flex justify-between items-center w-full">
                       <p className="text-gray-600">
                         {item.cont}x {item.description}
                       </p>

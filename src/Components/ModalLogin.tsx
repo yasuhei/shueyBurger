@@ -85,7 +85,6 @@ export default function ModalLogin({ openModal, close }: ModalProps) {
       })
 
       .catch((error) => {
-        console.log(error);
         setMessage(error.response.data.message);
         setAlert(error.response.data.alert);
 
@@ -95,7 +94,6 @@ export default function ModalLogin({ openModal, close }: ModalProps) {
           setModalOpen(false);
         }, 3000);
 
-        console.error(error);
       });
   };
 

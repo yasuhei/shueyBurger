@@ -117,7 +117,6 @@ export function ModalCadastro({ openModal, close }: ModalProps) {
         }, 2000);
       })
       .catch((error) => {
-        console.error(error);
       });
   };
 

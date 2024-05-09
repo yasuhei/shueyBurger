@@ -96,7 +96,6 @@ export function Cadastro() {
         }, 2000);
       })
       .catch((error) => {
-        console.error(error);
       });
   };
 

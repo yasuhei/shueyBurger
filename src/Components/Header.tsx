@@ -173,7 +173,7 @@ export function Header() {
           )}
         </IconButton>
       </div>
-      <MobileNav open={openNav}>
+      {/* <MobileNav open={openNav}>
         <div className="container mx-auto">
           {navList}
           <Button
@@ -185,7 +185,7 @@ export function Header() {
             <span>Buy Now</span>
           </Button>
         </div>
-      </MobileNav>
+      </MobileNav> */}
     </Navbar>
   );
 }

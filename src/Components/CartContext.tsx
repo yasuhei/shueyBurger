@@ -1,4 +1,3 @@
-// CartContext.tsx
 import { createContext, useContext, useState } from "react";
 
 export interface CartItem {
@@ -11,7 +10,7 @@ export interface CartItem {
 
 interface CartContextType {
   cartItems: CartItem[];
-  addToCart: (item: CartItem | CartItem[]) => void;
+  addToCart: (item: CartItem) => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -27,20 +26,26 @@ export function useCart() {
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
-  const addToCart = (item: CartItem | CartItem[]) => {
-    if (Array.isArray(item)) {
-      setCartItems((prevItems) => [...prevItems, ...item]);
+  const addToCart = (item: CartItem) => {
+    const existingItemIndex = cartItems.findIndex(
+      (cartItem) => cartItem.description === item.description
+    );
+
+    if (existingItemIndex !== -1) {
+      // Item already exists in cart, update quantity
+      const updatedCartItems = [...cartItems];
+      updatedCartItems[existingItemIndex].cont += item.cont;
+      updatedCartItems[existingItemIndex].total += item.total;
+      setCartItems(updatedCartItems);
     } else {
+      // Item does not exist in cart, add it
       setCartItems((prevItems) => [...prevItems, item]);
     }
   };
 
-  // Other functions and states as needed
-
   const value: CartContextType = {
     cartItems,
     addToCart,
-    // Other functions and states as needed
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
