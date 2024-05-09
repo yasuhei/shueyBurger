@@ -1,13 +1,14 @@
 import food from "../assets/images/food.png";
+
 export function Delivery() {
   return (
     <>
-      <div className="flex justify-center items-center  ">
-        <div className="flex justify-start items-start w-full">
-          <img src={food} alt="" className="w-96" />
+      <div className="flex justify-center items-center">
+        <div className="flex justify-start items-start w-full md:w-auto hidden md:block">
+          <img src={food} alt="" className="w-96 " />
         </div>
         <div className="flex justify-center items-center flex-col">
-          <h2 className="font-semibold text-4xl text-center py-4 text-gray-600">
+          <h2 className="font-semibold text-4xl text-center py-4 text-gray-600 md:text-5xl">
             NÓS ENTREGAMOS AI <br /> NA SUA CASA!
           </h2>
           <span className="flex justify-center items-center text-center text-gray-600 font-semibold">

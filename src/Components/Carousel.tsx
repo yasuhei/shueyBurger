@@ -4,13 +4,16 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/virtual";
 import { imagens } from "../utils/Images";
+import { useMediaQuery } from "@mui/material";
 // import image7 from "../images/image7.jpg";
 
 export function CarouselFood() {
+  const isMobile = useMediaQuery("(max-width:600px)");
+
   return (
     <>
       <Swiper
-        slidesPerView={3}
+        slidesPerView={isMobile ? 1.5 : 3}
         spaceBetween={30}
         autoplay={{
           delay: 5500,
